@@ -1,128 +1,127 @@
-* How to Generate the Dataset?
+# Two-dimensional Proximal Constraints with Group Lasso for Disease Progression Prediction
 
-** I already include required dataset in "report/dat/" folder, including the files for one-dimensional and two-dimensional algorithms. However, it is still possible for you to regenerate all the files with "parser_LS_new" and "parser_mtl_LS_new". The former one generates dataset for one-dimensional algorithms and the latter one is for two-dimensional ones.
-
-
-
-* How To Run Experiments?
-
-** For all experiments, they can be categorized into one-dimensional algorithms and two-dimensional algorithms. For the former one, they include 1D-Ridge, 1D-Lasso and 1D-TGL. For the implementation convenience, I just run 1D-Ridge experiments in function "run_Ridge_sgl", and run the rest of them in "run_Least_sgl". On the other hand, 2D-Lasso, 2D-TGL and 2D-TGL+ are implemented in "run_Least_mtl".
-
-** The experiment framework in "run_Ridge_sgl" is simple. There are total of eight experiments consisted by the combination of two feature sets, two target scores, and two evaluation metrics, which produces eight experiment results (2 x 2 x 2).
-
-** The experiment framework in "run_Least_sgl" and "run_Least_mtl" are similar. There are multiple algorithms in each file, which are listed above, and every algorithm will be executed eight times by different combinations of feature sets, target scores, and evaluation metrics. To run one of the algorithms in each file, just counter-comment out the corresponding block of parameter settings and algorithm statement. For example, if you want to execute 1D-TGL algorithm, in "run_Least_sgl" you can just comment out the block in betweeen line 14 to line 19 and line 113, meanwhile, counter-comment out line 24 to line 29 and line 114. Then "run_Least_sgl" will produce the correct experiment result for you.
-
-** Note that all the experiment is conducted under five-fold cross-validation and are repeated with five different seeds; furthermore, in each fold, experiment results are reweighed by the sample size in each time point.
-
-** Table for Referencing algorithms to MatLab functions
-*** 1D-Ridge: run_Ridge_sgl
-*** 1D-Lasso: run_Least_sgl -> Least_Lasso_sgl
-*** 1D-TGL  : run_Least_sgl -> Least_TGL_sgl
-*** 1D-cFSGL: run_Least_sgl -> Least_cFSGL_sgl
-*** 2D-Lasso: run_Least_mtl -> Least_Lasso_mtl
-*** 2D-TGL  : run_Least_mtl -> Least_TGL_mtl_n
-*** 2D-TGL+ : run_Least_mtl -> Least_TGL_mtl_g
+## Methodology
+In this paper, I mainly contribute in extending multitask learning models with one-dimensional constraint into model with two-dimensional ones.
+- Extension From 1D-TGL to 2D-TGL and 2D-TGL+
+- Extension From 1D-cFSGL to 2D-cFSGL and 2D-cFSGL+
 
 
-
-* How To Explain Experiment Results?
-
-** For each of algorithm experiment, there are eight blocks for different combinations between feature sets, target scores and evaluation metrics. Each of the block contains the task description, parameter description, results for five different seeds, the overall averaged results and their variance.
+## Dataset
+In this experiment, I use dataset provided by Alzheimer’s Disease Neuroimaging Initiative (ADNI), whose information can be found in their [website](http://adni.loni.usc.edu/).
 
 
-
-** How to Examine the Improvement Significance?
-
-** I consider the comparisons between pairs like (1D-Lasso, 2D-Lasso) and (1D-TGL, 2D-TGL) for "Hypothesis I: 2D algorithms defeat 1D algorithms" and pairs like (2D-TGL, 2D-TGL+) for "Hypothesis II: 2D+ algorithms defeats 2D algorithms". All the comparisons are conducted under paired t-test with five samples for both competitors generated from five different seeds (1 to 5).
+### How To Obtain Dataset?
+Since the dataset is preserved for request-only. unfortunately, I cannot provide the dataset publicly. To apply for the dataset, please refer to this [link](http://adni.loni.usc.edu/data-samples/access-data/).
 
 
+### What Is Included In The Dataset?
+To fully reproduce my experiment results, a list of dataset is required. Files provide two kinds of features as follows.
+1. MRI features
+    - UCSFFSL_02_01_16.csv
+2. META features 
+    - ADASSCORES.csv
+    - CDR.csv
+    - FAQ.csv
+    - GDSCALE.csv
+    - LABDATA.csv
+    - MODHACH
+    - NEUROBAT.csv
+    - PTDEMOG.csv
+    - MMSE.csv
 
-* How to Understand the Implementation for Each Algorithm?
-
-** Since most of my codes have similar structures, I only add comments on few of them, such as "run_Least_mtl" and "Least_TGL_mtl_g". I believe the rest of them are straightforward to understand.
-
-** For more details, please refer to my previous slides "ITRI_Report" under "report/doc/" and corresponding papers. Or, you can feel free to email your questions to me: "wrangle1005@gmail.com".
+A detailed information for META features are shown as below.
+![](img/META_feature_info.png)
 
 
+### How To Preprocess Dataset?
+Once all the dataset is downloaded, please make sure to put all those downloaded files under the folder ['dat/Origin'](dat/Origin) and create folder ['dat/TGL_sgl/Longitudinal/'](dat/TGL_sgl/Longitudinal/) and ['dat/TGL_mtl/Longitudinal/'](dat/TGL_mtl/Longitudinal/).
 
-* What is the Update Information?
+After that, please execute both ['src/parser_sgl_LS.R'](src/parser_sgl_LS.R) and ['src/parser_mtl_LS.R']('src/parser_mtl_LS.R') files, which will generate a processed data combined two different feature sets (MRI, MRI+META) and two different objective scores (MMSE, ADAS-Cog: TOTAL11).
 
-** Organize my project structure 
+At the end, please execute both ['src/mergeTP_sgl.py'](src/mergeTP_sgl.py) and ['src/mergeTP_mtl.py']('src/mergeTP_mtl.py') files, which will generate all needed tasks for later model learning.
 
-** Rerun all the experiments with different seeds instead of using merely one seed.
+The number of instances for MRI and MRI+META are shown as two figures below.
 
-** Show the significance result
+1. Number of instances with MRI feature
+![](img/MRI_num_instance.png)
+2. Number of instances with MRI+META feature
+![](img/MRI+META_num_instance.png)
 
 
 
-* Appendix :: Experiment
+## Experiments and Results
+All the experiment is conducted under five-fold cross-validation and are repeated with five different seeds; furthermore, in each fold, experiment results are reweighed by the sample size in each time point.
 
-** Experiment Results (Correlated Coefficient)
-         |     (M, MMSE)     |    (M+E, MMSE)    |     (M, ADAS)     |  (M+E, ADAS)
-1D-Ridge | 0.741961±0.000068 | 0.777012±0.000095 | 0.744862±0.000021 | 0.795173±0.000030
-1D-Lasso | 0.740918±0.000004 | 0.814807±0.000007 | 0.720986±0.000001 | 0.835312±0.000011
-1D-TGL   | 0.778166±0.000029 | 0.831581±0.000004 | 0.769211±0.000022 | 0.850624±0.000014
-1D-cFSGL | 0.787235±0.000011 | 0.834423±0.000004 | 0.782664±0.000017 | 0.850632±0.000013
-2D-Lasso | 0.755110±0.000019 | 0.826931±0.000018 | 0.730911±0.000006 | 0.834281±0.000002
-2D-TGL   | 0.787764±0.000058 | 0.837247±0.000024 | 0.767291±0.000015 | 0.850178±0.000004
-2D-TGL+  | 0.817869±0.000002 | 0.865517±0.000001 | 0.801083±0.000002 | 0.873725±0.000002
+### Which Algorithms Are Implemented?
+For one-dimensional algorithms, we implemented three algorithms as following.
+1. Least_Lasso_sgl.m
+2. Least_TGL_sgl.m
+3. Least_CFGLasso_sgl.m.
 
-** Improvement Significance (Correlated Coefficient)
-                          | (M, MMSE) |(M+E, MMSE)| (M, ADAS) |(M+E, ADAS)
-H1 - (1D-Lasso, 2D-Lasso) | 0.002046  | 0.000235* | 0.002898* |   - - - 
-H1 - (1D-TGL  , 2D-TGL  ) | 0.076539  | 0.083429  |   - - -   |   - - - 
-H2 - (2D-TGL  , 2D-TGL+ ) | 0.001751* | 0.000213* | 0.000018* | 0.000010* 
+For two-dimensional algorithms, we implemented five algorithms as follows.
+1. Least_Lasso_mtl.m
+2. Least_TGL_mtl_g.m
+3. Least_TGL_mtl_n.m
+4. Least_CFGLasso_mtl_g_fl.m
+5. Least_CFGLasso_mtl_n.m
 
-** Experiment Results (Root Mean Squared Error)
-         |     (M, MMSE)     |    (M+E, MMSE)    |     (M, ADAS)     |  (M+E, ADAS)
-1D-Ridge | 3.018537±0.003030 | 2.821958±0.002990 | 6.061067±0.004157 | 5.499035±0.006388
-1D-Lasso | 2.952054±0.000137 | 2.532943±0.000044 | 6.142708±0.000546 | 4.855201±0.000929
-1D-TGL   | 2.768080±0.001932 | 2.413267±0.000533 | 5.689965±0.004379 | 4.676146±0.000993
-1D-cFSGL | 2.739402±0.001347 | 2.412433±0.000366 | 5.638594±0.002056 | 4.595167±0.001067
-2D-Lasso | 2.974263±0.000549 | 2.516909±0.000769 | 6.466563±0.000166 | 4.981515±0.000753
-2D-TGL   | 2.827151±0.014793 | 2.385045±0.000056 | 5.900847±0.001264 | 4.792991±0.000264
-2D-TGL+  | 2.645794±0.001399 | 2.224907±0.000258 | 5.509920±0.001204 | 4.406653±0.000019
-
-** Improvement Significance (Correlated Coefficient)
-                          | (M, MMSE) |(M+E, MMSE)| (M, ADAS) |(M+E, ADAS)
-H1 - (1D-Lasso, 2D-Lasso) |   - - -   |   - - -   |   - - -   |   - - -  
-H1 - (1D-TGL  , 2D-TGL  ) |   - - -   |   - - -   |   - - -   |   - - -  
-H2 - (2D-TGL  , 2D-TGL+ ) | 0.022604* | 0.000096* | 0.000016* | <0.000010*
-
-*** Note that "*" means sinificant improvement, while "- - -" means performance decline.
-*** Hypothesis I seems work sometimes under Correlated Coefficient evaluation metric; however it fails under Root Mean Squared Error evaluation metric.
-*** Hypothesis II seems work everywhere.
+### How To Run Experiments?
+For experiments, please refer to ['src/run_Ridge_sgl.m'](src/run_Ridge_sgl.m), ['src/run_Least_sgl.m'](src/run_Least_sgl.m) and ['src/run_Least_mtl.m'](src/run_Least_mtl.m). So far, one still needs to manually comment and uncomment some blocks of codes to examine one specific algorithm. It is noticeable that ['src/run_Ridge_sgl.m'](src/run_Ridge_sgl.m) is used for Ridge algorothm, ['src/run_Least_sgl.m'](src/run_Least_sgl.m) is used for one-dimensional algorithms; while ['src/run_Least_mtl.m'](src/run_Least_mtl.m) is designed for two-dimensional algorithms.
 
 
 
-* Appendix :: Package Contents
-report/
-├── MALSAR1.1
-│   ├── COPYRIGHT
-│   ├── INSTALL.m
-│   ├── MALSAR
-│   ├── data
-│   ├── examples
-│   ├── manual
-│   └── readme.txt
+### How To Explain Results?
+
+## Appendix: Experiment Results
+1. Correlated Coefficient (CC) Evaluation Metric
+![](img/result_coefficient.png)
+
+2. Root Mean Squared Error (RMSE) Evaluation Metric
+![](img/result_rmse.png)
+
+## Appendix: Repository Structure
+```
+.
+├── README.md
+├── README.md.ipynb
 ├── dat
 │   ├── Origin
-│   ├── TGL
-│   └── TGL_mtl
-├── doc
-│   ├── ITRI_Report.pdf
-│   └── readme.txt
+│   ├── TGL_mtl
+│   │   └── Longitudinal
+│   └── TGL_sgl
+│       └── Longitudinal
+├── img
+│   ├── META_feature_info.png
+│   ├── MRI+META_num_instance.png
+│   ├── MRI_num_instance.png
+│   ├── result_coefficient.png
+│   └── result_rmse.png
 └── src
+    ├── Least_CFGLasso_mtl_g_fl.m
+    ├── Least_CFGLasso_mtl_n.m
     ├── Least_CFGLasso_sgl.m
     ├── Least_Lasso_mtl.m
     ├── Least_Lasso_sgl.m
     ├── Least_TGL_mtl_g.m
     ├── Least_TGL_mtl_n.m
     ├── Least_TGL_sgl.m
-    ├── parser_LS_new.R
-    ├── parser_mtl_LS_new.R
+    ├── TDFusedLasso(gcc-old).cpp
+    ├── TDFusedLasso.cpp
+    ├── TDFusedLasso.mexmaci64
+    ├── TDFusedLasso.o
+    ├── mergeTP_mtl.py
+    ├── mergeTP_sgl.py
+    ├── parser_mtl_LS.R
+    ├── parser_sgl_LS.R
     ├── run_Least_mtl.m
     ├── run_Least_sgl.m
-    └── run_Ridge_sgl.m
+    ├── run_Ridge_sgl.m
+    ├── sll_opts.m
+    └── toy-example
+        ├── 1d.cpp
+        ├── 1d.in
+        ├── 2d.cpp
+        └── 2d.in
 
-11 directories, 15 files
+9 directories, 31 files
+```
