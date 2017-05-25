@@ -59,7 +59,7 @@ All the experiment is conducted under five-fold cross-validation and are repeate
 For one-dimensional algorithms, we implemented three algorithms as following.
 1. Least_Lasso_sgl.m
 2. Least_TGL_sgl.m
-3. Least_CFGLasso_sgl.m.
+3. Least_CFGLasso_sgl.m
 
 For two-dimensional algorithms, we implemented five algorithms as follows.
 1. Least_Lasso_mtl.m
