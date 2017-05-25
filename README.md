@@ -36,9 +36,9 @@ A detailed information for META features are shown as below.
 ### How To Preprocess Dataset?
 Once all the dataset is downloaded, please make sure to put all those downloaded files under the folder ['dat/Origin'](dat/Origin) and create folder ['dat/TGL_sgl/Longitudinal/'](dat/TGL_sgl/Longitudinal/) and ['dat/TGL_mtl/Longitudinal/'](dat/TGL_mtl/Longitudinal/).
 
-After that, please execute both ['src/parser_sgl_LS.R'](src/parser_sgl_LS.R) and ['src/parser_mtl_LS.R']('src/parser_mtl_LS.R') files, which will generate a processed data combined two different feature sets (MRI, MRI+META) and two different objective scores (MMSE, ADAS-Cog: TOTAL11).
+After that, please execute both ['src/parser_sgl_LS.R'](src/parser_sgl_LS.R) and ['src/parser_mtl_LS.R'](src/parser_mtl_LS.R) files, which will generate a processed data combined two different feature sets (MRI, MRI+META) and two different objective scores (MMSE, ADAS-Cog: TOTAL11).
 
-At the end, please execute both ['src/mergeTP_sgl.py'](src/mergeTP_sgl.py) and ['src/mergeTP_mtl.py']('src/mergeTP_mtl.py') files, which will generate all needed tasks for later model learning.
+At the end, please execute both ['src/mergeTP_sgl.py'](src/mergeTP_sgl.py) and ['src/mergeTP_mtl.py'](src/mergeTP_mtl.py) files, which will generate all needed tasks for later model learning.
 
 The number of instances for MRI and MRI+META are shown as two figures below.
 
