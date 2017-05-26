@@ -43,10 +43,14 @@ At the end, please execute both [mergeTP_sgl.py](src/mergeTP_sgl.py) and [mergeT
 The number of instances for MRI and MRI+META are shown as two figures below.
 
 1. Number of instances with MRI feature
-![](img/MRI_num_instance.png)
-2. Number of instances with MRI+META feature
-![](img/MRI+META_num_instance.png)
+<p align="center">
+  <img src="img/MRI_num_instance.png">
+</p>
 
+2. Number of instances with MRI+META feature
+<p align="center">
+  <img src="img/MRI+META_num_instance.png">
+</p>
 
 
 ## Experiments and Results
