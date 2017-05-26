@@ -30,7 +30,9 @@ To fully reproduce our experiment results, a list of dataset is required. Files 
     - MMSE.csv
 
 A detailed information for META features are shown as below.
-![](img/META_feature_info.png)
+<p align="center">
+  <img src="img/META_feature_info.png">
+</p>
 
 
 ### How To Preprocess Dataset?
@@ -104,10 +106,14 @@ In other words, from experient results, we show that simply considering more inf
 
 ## Appendix: Experiment Results
 1. Correlated Coefficient (CC) Evaluation Metric
-![](img/result_coefficient.png)
+<p align="center">
+  <img src="img/result_coefficient.png">
+</p>
 
 2. Root Mean Squared Error (RMSE) Evaluation Metric
-![](img/result_rmse.png)
+<p align="center">
+  <img src="img/result_rmse.png">
+</p>
 
 
 
