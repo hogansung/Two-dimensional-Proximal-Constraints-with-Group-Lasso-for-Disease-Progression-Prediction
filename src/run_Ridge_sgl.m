@@ -1,6 +1,6 @@
 function [] = run_Ridge_sgl()
 
-addpath(genpath('/Users/hogan/Google Drive/Courses/PreGraduate_1/MALSAR1.1'));
+addpath(genpath( {MALSAR_PATH} ));
 warning('off');
 
 %% set settings

@@ -1,6 +1,6 @@
 function [] = run_Least_mtl()
 
-addpath(genpath('/Users/hogan/Google Drive/Courses/PreGraduate_1/MALSAR1.1'));
+addpath(genpath( {MALSAR_PATH} ));
 
 %% set settings
 FD = '../dat/TGL_mtl/Longitudinal/';
