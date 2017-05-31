@@ -30,7 +30,9 @@ To fully reproduce our experiment results, a list of dataset is required. Files 
     - MMSE.csv
 
 A detailed information for META features are shown as below.
-![](img/META_feature_info.png)
+<p align="center">
+  <img src="img/META_feature_info.png">
+</p>
 
 
 ### How To Preprocess Dataset?
@@ -43,10 +45,14 @@ At the end, please execute both [mergeTP_sgl.py](src/mergeTP_sgl.py) and [mergeT
 The number of instances for MRI and MRI+META are shown as two figures below.
 
 1. Number of instances with MRI feature
-![](img/MRI_num_instance.png)
-2. Number of instances with MRI+META feature
-![](img/MRI+META_num_instance.png)
+<p align="center">
+  <img src="img/MRI_num_instance.png">
+</p>
 
+2. Number of instances with MRI+META feature
+<p align="center">
+  <img src="img/MRI+META_num_instance.png">
+</p>
 
 
 ## Experiments and Results
@@ -151,10 +157,14 @@ In other words, from experient results, we show that simply considering more inf
 
 <!--
 1. Correlated Coefficient (CC) Evaluation Metric
-![](img/result_coefficient.png)
+<p align="center">
+  <img src="img/result_coefficient.png">
+</p>
 
 2. Root Mean Squared Error (RMSE) Evaluation Metric
-![](img/result_rmse.png)
+<p align="center">
+  <img src="img/result_rmse.png">
+</p>
 -->
 
 
