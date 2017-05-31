@@ -99,11 +99,63 @@ In other words, from experient results, we show that simply considering more inf
 
 
 ## Appendix: Experiment Results
+
+### Experiment Results (Correlated Coefficient)
+|     | (M, MMSE) | (M+E, MMSE) | (M, ADAS) | (M+E, ADAS) |
+| :-: | :-------: | :---------: | :-------: | :---------: |
+| 1D-Ridge  | 0.742 | 0.777 | 0.745 | 0.795 |
+| 1D-Lasso  | 0.741 | 0.815 | 0.721 | 0.835 |
+| 1D-TGL    | 0.778 | 0.832 | 0.769 | 0.851 |
+| 1D-cFSGL  | 0.787 | 0.834 | 0.783 | 0.851 |
+| 2D-Lasso  | 0.755 | 0.827 | 0.731 | 0.834 |
+| 2D-TGL    | 0.788 | 0.837 | 0.767 | 0.850 |
+| 2D-cFSGL  | 0.799 | 0.842 | 0.773 | 0.849 |
+| 2D-TGL+   | 0.818 | **0.866** | 0.801 | 0.874 |
+| 2D-CFSGL+ | **0.819** | **0.866** | **0.805** | **0.877** |
+
+### Improvement Significance (Correlated Coefficient)
+|     | (M, MMSE) | (M+E, MMSE) | (M, ADAS) | (M+E, ADAS) |
+| :-: | :-------: | :---------: | :-------: | :---------: |
+| H1 - (1D-Lasso, 2D-Lasso)  |  0.0020\* |  0.0002\* |  0.0029\* |  0.5433   |
+| H1 - (1D-TGL  , 2D-TGL  )  |  0.0765   |  0.0834   |  0.2734   |  0.7970   |
+| H1 - (1D-cFSGL, 2D-cFSGL)  |  0.0054\* |  0.0203\* |  0.0022\* |  0.4477   |
+| H2 - (2D-TGL  , 2D-TGL+ )  |  0.0018\* |  0.0002\* | <0.0001\* | <0.0001\* |
+| H2 - (2D-cFSGL, 2D-cFSGL+) |  0.0001\* |  0.0002\* | <0.0001\* | <0.0001\* |
+
+### Experiment Results (Root Mean Squared Error)
+|     | (M, MMSE) | (M+E, MMSE) | (M, ADAS) | (M+E, ADAS) |
+| :-: | :-------: | :---------: | :-------: | :---------: |
+| 1D-Ridge  | 3.019 | 2.822 | 6.061 | 5.499 |
+| 1D-Lasso  | 2.952 | 2.533 | 6.143 | 4.855 |
+| 1D-TGL    | 2.768 | 2.413 | 5.690 | 4.676 |
+| 1D-cFSGL  | 2.739 | 2.412 | 5.639 | 4.595 |
+| 2D-Lasso  | 2.974 | 2.517 | 6.467 | 4.982 |
+| 2D-TGL    | 2.827 | 2.385 | 5.901 | 4.793 |
+| 2D-cFSGL  | 2.802 | 2.437 | 5.896 | 4.760 |
+| 2D-TGL+   | 2.646 | **2.225** | 5.510 | 4.407 |
+| 2D-cFSGL+ | **2.638** | 2.248 | **5.378** | **4.270** |
+
+### Improvement Significance (Correlated Coefficient)
+|     | (M, MMSE) | (M+E, MMSE) | (M, ADAS) | (M+E, ADAS) |
+| :-: | :-------: | :---------: | :-------: | :---------: |
+| H1 - (1D-Lasso, 2D-Lasso)  |  0.0904\* |  0.3489   | <0.0001\* |  0.0038\* |
+| H1 - (1D-TGL  , 2D-TGL  )  |  0.4042   |  0.1058   |  0.0004\* |  0.0031\* |
+| H1 - (1D-cFSGL, 2D-cFSGL)  |  0.1427   |  0.3745   | <0.0001\* |  0.0026\* |
+| H2 - (2D-TGL  , 2D-TGL+ )  |  0.0226\* |  0.0001\* | <0.0001\* | <0.0001\* |
+| H2 - (2D-cFSGL, 2D-cFSGL+) |  0.0032\* |  0.0027\* | <0.0001\* | <0.0001\* |
+
+#### Notes
+* Note that "\*" means sinificant improvement
+* Hypothesis I seems work sometimes; however it is not so stable.
+* Hypothesis II seems work everywhere.
+
+<!--
 1. Correlated Coefficient (CC) Evaluation Metric
 ![](img/result_coefficient.png)
 
 2. Root Mean Squared Error (RMSE) Evaluation Metric
 ![](img/result_rmse.png)
+-->
 
 
 
